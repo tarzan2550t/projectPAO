@@ -36,6 +36,25 @@ exports.login = async (req,res,next)=>{
     }
 }
 
+
+exports.department = async(req,res,next)=>{
+    try{
+        const items = await conn('departments').select()
+        res.json(items)
+    }catch(e){
+        next(e)
+    }
+}
+
+exports.group = async(req,res,next)=>{
+    try{
+        const items = await conn('org_groups').select()
+        res.json(items)
+    }catch(e){
+        next(e)
+    }
+}
+
 // exports.test = async (req,res,next)=>{
 //     try{
 //         res.json({message:'hello'})

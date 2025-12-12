@@ -8,6 +8,11 @@ router.post('/register' , controller_auth.register)
 router.post('/login' , controller_auth.login)
 
 
+//เเสดงข้อมูลช่องให้เลือก list หน้าregister 
+router.get('/departments' , controller_auth.department)
+router.get('/groups' , controller_auth.group)
+
+
 
 
 module.exports = router
