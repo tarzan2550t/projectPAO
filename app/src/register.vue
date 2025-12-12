@@ -1,5 +1,5 @@
 <template>
-    <v-container class="d-flex justify-center align-center" style="height: 100vh;">
+    <v-container class="d-flex justify-center align-center" style="height: 750px;">
         <v-card width="520" class="pa-6">
             <h2 class="text-center mb-3">สร้างบัญชีผู้ใช้</h2>
             <v-text-field
@@ -19,7 +19,7 @@
             prepend-inner-icon="mdi-lock"
             />
             <v-text-field
-            v-model="name_id"
+            v-model="name"
             label="ชื่อผู้ใช้"
             type="text"
             variant="outlined"
@@ -28,7 +28,7 @@
             />
             <v-select
             v-model="department_id"
-            :item="department"
+            :items="departments"
             item-title="name"
             item-value="id"
             variant="outlined"
@@ -36,7 +36,7 @@
             />
             <v-select
             v-model="group_id"
-            :item="group"
+            :items="groups"
             item-title="name"
             item-value="id"
             variant="outlined"
@@ -55,36 +55,44 @@ import { onMounted,ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
+const router = useRouter()
+
 const email = ref("");
 const password = ref("");
-const name_id = ref("");
+const name = ref("");
 const department_id = ref([])
 const group_id = ref([])
 
-const department = ref([])
-const group = ref([])
+const departments = ref([])
+const groups = ref([])
 
 
 async function loaddata() {
-    const dapt = await axios.get('')
-    department = dapt.data
-    const grop = await axios.get('')
-    group = grop.data
+    try{
+        const dapt = await axios.get('http://localhost:7000/api/auth/departments')
+        console.log(dapt.data)
+        departments.value = dapt.data
+        const grop = await axios.get('http://localhost:7000/api/auth/groups')
+        console.log(grop.data)
+        groups.value = grop.data
+    }catch(err){
+        console.log(err)
+    }
 }
 
 async function  register () {
-    payload = {
+    console.log("error" , email.value , password.value , name.value , department_id.value , group_id.value);
+     const payload = {
         email:email.value,
         password:password.value,
-        name_id:name_id.value,
+        name:name.value,
         department_id:department_id.value,
         group_id:group_id.value,
     }
     try{
-        const respone = await axios.post('', payload)
-
-        res = respone.data
-        if(res.succes){
+        const respone = await axios.post('http://localhost:7000/api/auth/register', payload)
+        console.log(respone.data);
+        if(respone.data.succes){
             router.push('/')
         }else{
             alert('สร้างบัญชีไม่สำเร็จ')

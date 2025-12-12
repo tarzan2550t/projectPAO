@@ -47,7 +47,7 @@ async function login() {
     }
     console.log(data)
     try{
-        const respone = await axios.post('',data)
+        const respone = await axios.post('http://localhost:7000/api/auth/login',data)
         
         const res = respone.data 
 
@@ -60,6 +60,8 @@ async function login() {
             }if(res.role === 'evaluatee'){
                 router.push('/user')
             }
+        }else{
+            alert('ไม่พบบัญชี')
         }
     }catch(err){
         console.log(err)
