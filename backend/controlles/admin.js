@@ -1,6 +1,6 @@
 const conn = require('../config/db')
 const bcrypt =require('bcrypt')
-const jwt = require('jsonwebtoken')
+
 
 //<----เเสดงข้อมูลเป็น List ---->
 exports.userlsit = async (req,res,next)=>{
