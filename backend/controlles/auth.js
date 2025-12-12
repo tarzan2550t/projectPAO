@@ -29,7 +29,7 @@ exports.login = async (req,res,next)=>{
         if(!password_hash) {const e =  new Error('รหัสผ่านไม่ถูกต้อง'); e.status = 400 ; return next(e)  }
 
 
-        const token = await jwt.sign({id:examine.id , role:examine.role} , process.env.JWT_SECRETFILE , {expiresIn:'2h'})
+        const token = await jwt.sign({id:examine.id ,name: examine.name ,  role:examine.role} , process.env.JWT_SECRETFILE , {expiresIn:'2h'})
         res.json({token , role: examine.role})
     }catch(e){
         next(e)
